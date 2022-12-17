@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.estudo.springBoot.enuns.PedidoStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -33,14 +34,27 @@ public class Pedido implements Serializable{
 	@JoinColumn(name = "cliente_id")
 	private Usuario cliente;
 	
+	private Integer status;
+	
 	public Pedido() {
 
 	}
 
-	public Pedido(Long id, Instant momentos, Usuario cliente) {
+	public Pedido(Long id, Instant momentos, Usuario cliente, PedidoStatus status) {
 		this.id = id;
 		this.momentos = momentos;
 		this.cliente = cliente;
+		setStatus(status);
+	}
+
+	public PedidoStatus getStatus() {
+		return PedidoStatus.valorOf(status);
+	}
+
+	public void setStatus(PedidoStatus status) {
+		if(status != null) {
+			this.status = status.getCodigo();
+		}
 	}
 
 	public Usuario getCliente() {

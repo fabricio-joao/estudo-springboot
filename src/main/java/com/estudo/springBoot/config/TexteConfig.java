@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.estudo.springBoot.entidades.Pedido;
 import com.estudo.springBoot.entidades.Usuario;
+import com.estudo.springBoot.enuns.PedidoStatus;
 import com.estudo.springBoot.repositorios.PedidoRepositorios;
 import com.estudo.springBoot.repositorios.UsuarioRepositorios;
 
@@ -31,9 +32,9 @@ public class TexteConfig implements CommandLineRunner{
 		
 		ur.saveAll(Arrays.asList(u1, u2));
 		
-		Pedido pedido1 = new Pedido(null, Instant.parse("2019-06-20T19:53:07Z"), u1);
-		Pedido pedido2 = new Pedido(null, Instant.parse("2019-07-21T03:42:10Z"), u2);
-		Pedido pedido3 = new Pedido(null, Instant.parse("2019-07-22T15:21:22Z"), u1);
+		Pedido pedido1 = new Pedido(null, Instant.parse("2019-06-20T19:53:07Z"), u1, PedidoStatus.AGUARDANDO_PAGAMENTO);
+		Pedido pedido2 = new Pedido(null, Instant.parse("2019-07-21T03:42:10Z"), u2, PedidoStatus.PAGO);
+		Pedido pedido3 = new Pedido(null, Instant.parse("2019-07-22T15:21:22Z"), u1, PedidoStatus.AGUARDANDO_PAGAMENTO);
 		
 		pr.saveAll(Arrays.asList(pedido1, pedido2,pedido3));
 	}
