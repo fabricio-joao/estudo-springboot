@@ -1,4 +1,4 @@
-package com.estudo.springBoot;
+package com.estudo.springBoot.servicos;
 
 import java.util.List;
 import java.util.Optional;
