@@ -8,9 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.estudo.springBoot.entidades.Categorias;
 import com.estudo.springBoot.entidades.Pedido;
 import com.estudo.springBoot.entidades.Usuario;
 import com.estudo.springBoot.enuns.PedidoStatus;
+import com.estudo.springBoot.repositorios.CategoriasRepositorios;
 import com.estudo.springBoot.repositorios.PedidoRepositorios;
 import com.estudo.springBoot.repositorios.UsuarioRepositorios;
 
@@ -23,6 +25,9 @@ public class TexteConfig implements CommandLineRunner{
 	
 	@Autowired
 	private PedidoRepositorios pr;
+	
+	@Autowired
+	private CategoriasRepositorios cr;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -37,5 +42,11 @@ public class TexteConfig implements CommandLineRunner{
 		Pedido pedido3 = new Pedido(null, Instant.parse("2019-07-22T15:21:22Z"), u1, PedidoStatus.AGUARDANDO_PAGAMENTO);
 		
 		pr.saveAll(Arrays.asList(pedido1, pedido2,pedido3));
+		
+		Categorias cat1 = new Categorias(null, "Electronics");
+		Categorias cat2 = new Categorias(null, "Books");
+		Categorias cat3 = new Categorias(null, "Computers");
+		
+		cr.saveAll(Arrays.asList(cat1, cat2, cat3));
 	}
 }
