@@ -5,10 +5,14 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
@@ -27,6 +31,7 @@ public class Produtos implements Serializable{
 	private String imgURL;
 	
 	@ManyToMany
+	//@JoinTable(name = "Produtos_Categorias", joinColumns = @JoinColumn(name = "Produtos_id"), inverseJoinColumns = @JoinColumn(name = "Categorias_id"))
 	private Set<Categorias> categorias = new HashSet<>();
 	
 	public Produtos() {

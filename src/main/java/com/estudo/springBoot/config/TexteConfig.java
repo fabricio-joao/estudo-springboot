@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.estudo.springBoot.entidades.Categorias;
 import com.estudo.springBoot.entidades.Pedido;
+import com.estudo.springBoot.entidades.Produtos;
 import com.estudo.springBoot.entidades.Usuario;
 import com.estudo.springBoot.enuns.PedidoStatus;
 import com.estudo.springBoot.repositorios.CategoriasRepositorios;
 import com.estudo.springBoot.repositorios.PedidoRepositorios;
+import com.estudo.springBoot.repositorios.ProdutosRepositorios;
 import com.estudo.springBoot.repositorios.UsuarioRepositorios;
 
 @Configuration 
@@ -29,11 +31,14 @@ public class TexteConfig implements CommandLineRunner{
 	@Autowired
 	private CategoriasRepositorios cr;
 	
+	@Autowired
+	private ProdutosRepositorios prs;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Usuario u1 = new Usuario(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
-		Usuario u2 = new Usuario(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
+		Usuario u1 = new Usuario(null, "Maria Silva", "maria@gmail.com", "988888888", "123456");
+		Usuario u2 = new Usuario(null, "Alex Luiz", "alex@gmail.com", "977777777", "123456");
 		
 		ur.saveAll(Arrays.asList(u1, u2));
 		
@@ -43,10 +48,26 @@ public class TexteConfig implements CommandLineRunner{
 		
 		pr.saveAll(Arrays.asList(pedido1, pedido2,pedido3));
 		
-		Categorias cat1 = new Categorias(null, "Electronics");
-		Categorias cat2 = new Categorias(null, "Books");
-		Categorias cat3 = new Categorias(null, "Computers");
+		Categorias cat1 = new Categorias(null, "Eletronicos");
+		Categorias cat2 = new Categorias(null, "Livros");
+		Categorias cat3 = new Categorias(null, "Computadores");
 		
 		cr.saveAll(Arrays.asList(cat1, cat2, cat3));
+		
+		
+		Produtos produtos1 = new Produtos(null, "Summa Theologica", "Tratado sobre Teologia", 90.5, "");
+		Produtos produtos2 = new Produtos(null, "Smart Tv", "Televisão 40 polegadas", 2190.0, "");
+		Produtos produtos3 = new Produtos(null, "Macbook Pro", "Computador", 1250.0, "");
+		Produtos produtos4 = new Produtos(null, "Conjunto de Mesa Game", "Mesa com duas cadeiras", 100.99, "");
+		Produtos produtos5 = new Produtos(null, "Etica a Nicomaco", "Livro sobre ética", 100.99, "");
+		
+		produtos1.getCategorias().add(cat2);
+		produtos2.getCategorias().add(cat1);
+		produtos3.getCategorias().add(cat3);
+		produtos4.getCategorias().add(cat3);
+		produtos5.getCategorias().add(cat2);
+		
+	    prs.saveAll(Arrays.asList(produtos1, produtos2, produtos3, produtos4, produtos5));
+		
 	}
 }
