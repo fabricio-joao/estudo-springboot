@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,20 +32,31 @@ public class Produtos implements Serializable{
 	private String imgURL;
 	
 	@ManyToMany
-	//@JoinTable(name = "Produtos_Categorias", joinColumns = @JoinColumn(name = "Produtos_id"), inverseJoinColumns = @JoinColumn(name = "Categorias_id"))
+    @JoinTable(name = "Produtos_Categorias", joinColumns = @JoinColumn(name = "Produto_id"), inverseJoinColumns = @JoinColumn(name = "Categorias"))
 	private Set<Categorias> categorias = new HashSet<>();
+	
+	@OneToMany(mappedBy = "id.produtos")
+	private Set<PedidoItens> itens = new HashSet<>();
 	
 	public Produtos() {
 		
 	}
 
 	public Produtos(Long id, String nome, String descricao, Double preco, String imgURL) {
-		super();
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.preco = preco;
 		this.imgURL = imgURL;
+	}
+
+	@JsonIgnore
+	public Set<Pedido> getPedido() {
+		Set<Pedido> set = new HashSet<>();
+		for(PedidoItens x: itens) {
+			set.add(x.getPedido());
+		}
+		return set;
 	}
 
 	public Set<Categorias> getCategorias() {
