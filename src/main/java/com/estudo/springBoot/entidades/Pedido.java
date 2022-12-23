@@ -2,7 +2,9 @@ package com.estudo.springBoot.entidades;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import com.estudo.springBoot.enuns.PedidoStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -14,6 +16,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity 
@@ -36,6 +40,10 @@ public class Pedido implements Serializable{
 	
 	private Integer status;
 	
+	@OneToMany(mappedBy = "id.pedido")
+	private Set<PedidoItens> itens = new HashSet<>();
+	
+	
 	public Pedido() {
 
 	}
@@ -45,6 +53,10 @@ public class Pedido implements Serializable{
 		this.momentos = momentos;
 		this.cliente = cliente;
 		setStatus(status);
+	}
+
+	public Set<PedidoItens> getItens() {
+		return itens;
 	}
 
 	public PedidoStatus getStatus() {

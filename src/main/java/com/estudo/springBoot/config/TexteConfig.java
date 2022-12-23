@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.estudo.springBoot.entidades.Categorias;
 import com.estudo.springBoot.entidades.Pedido;
+import com.estudo.springBoot.entidades.PedidoItens;
 import com.estudo.springBoot.entidades.Produtos;
 import com.estudo.springBoot.entidades.Usuario;
 import com.estudo.springBoot.enuns.PedidoStatus;
 import com.estudo.springBoot.repositorios.CategoriasRepositorios;
+import com.estudo.springBoot.repositorios.PedidoItensRepositorios;
 import com.estudo.springBoot.repositorios.PedidoRepositorios;
 import com.estudo.springBoot.repositorios.ProdutosRepositorios;
 import com.estudo.springBoot.repositorios.UsuarioRepositorios;
@@ -33,6 +35,9 @@ public class TexteConfig implements CommandLineRunner{
 	
 	@Autowired
 	private ProdutosRepositorios prs;
+	
+	@Autowired
+	private PedidoItensRepositorios pir;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -68,6 +73,12 @@ public class TexteConfig implements CommandLineRunner{
 		produtos5.getCategorias().add(cat2);
 		
 	    prs.saveAll(Arrays.asList(produtos1, produtos2, produtos3, produtos4, produtos5));
+	    
+	    PedidoItens pi1 = new PedidoItens(pedido1, produtos1, 2, produtos1.getPreco());
+	    PedidoItens pi2 = new PedidoItens(pedido1, produtos3, 1, produtos1.getPreco());
+	    PedidoItens pi3 = new PedidoItens(pedido2, produtos3, 2, produtos3.getPreco());
+	    PedidoItens pi4 = new PedidoItens(pedido3, produtos5, 2, produtos5.getPreco());
 		
+	    pir.saveAll(Arrays.asList(pi1, pi2, pi3, pi4));
 	}
 }
