@@ -4,46 +4,44 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.estudo.springBoot.entidades.Pedido;
-import com.estudo.springBoot.entidades.Produtos;
-
+import com.estudo.springBoot.entidades.Produto;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Embeddable
-public class PedidosPorItemPK implements Serializable{
-	
+public class PedidoItemPK implements Serializable{
+
 	private static final long serialVersionUID = 1L;
 	
-	@ManyToOne 
-	@JoinColumn(name = "Pedido_id")
-	private Pedido pedido;
+	@ManyToOne
+	@JoinColumn(name = "Pedidos_id")
+	private Pedido pedidos;
 	
-	@ManyToOne 
+	@ManyToOne
 	@JoinColumn(name = "Produtos_id")
-	private Produtos produtos;
-
+	private Produto produtos;
 	
-	public Pedido getPedido() {
-		return pedido;
+	public Pedido getPedidos() {
+		return pedidos;
 	}
-
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
+	
+	public void setPedidos(Pedido pedidos) {
+		this.pedidos = pedidos;
 	}
-
-	public Produtos getProdutos() {
+	
+	public Produto getProdutos() {
 		return produtos;
 	}
-
-	public void setProdutos(Produtos produtos) {
+	
+	public void setProdutos(Produto produtos) {
 		this.produtos = produtos;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(pedido, produtos);
+		return Objects.hash(pedidos, produtos);
 	}
 
 	@Override
@@ -54,7 +52,7 @@ public class PedidosPorItemPK implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PedidosPorItemPK other = (PedidosPorItemPK) obj;
-		return Objects.equals(pedido, other.pedido) && Objects.equals(produtos, other.produtos);
+		PedidoItemPK other = (PedidoItemPK) obj;
+		return Objects.equals(pedidos, other.pedidos) && Objects.equals(produtos, other.produtos);
 	}
 }

@@ -2,8 +2,11 @@ package com.estudo.springBoot.entidades;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +31,7 @@ public class Usuario implements Serializable{
 	
 	
 	@OneToMany(mappedBy = "cliente")
-	List<Pedido> pedidos = new ArrayList<>();
+	private List<Pedido> itens = new ArrayList<>();
 	
 	public Usuario() {
 		
@@ -42,8 +45,8 @@ public class Usuario implements Serializable{
 		this.pasword = pasword;
 	}
 
-	public List<Pedido> getPedidos() {
-		return pedidos;
+	public List<Pedido> getItens() {
+		return itens;
 	}
 
 	public Long getId() {

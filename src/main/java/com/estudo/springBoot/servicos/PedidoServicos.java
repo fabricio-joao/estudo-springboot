@@ -7,15 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.estudo.springBoot.entidades.Pedido;
-import com.estudo.springBoot.entidades.Usuario;
 import com.estudo.springBoot.repositorios.PedidoRepositorios;
-import com.estudo.springBoot.repositorios.UsuarioRepositorios;
+
 
 @Service
 public class PedidoServicos {
- 
+
 	@Autowired
-	private PedidoRepositorios pr;
+	PedidoRepositorios pr;
 	
 	public List<Pedido> buscarPorUsuarios(){
 		return pr.findAll();

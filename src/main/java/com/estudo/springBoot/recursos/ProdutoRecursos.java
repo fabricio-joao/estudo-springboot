@@ -9,24 +9,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.estudo.springBoot.entidades.Categorias;
-import com.estudo.springBoot.servicos.CategoriasServicos;
+import com.estudo.springBoot.entidades.Produto;
+import com.estudo.springBoot.servicos.ProdutoServicos;
 
 @RestController 
-@RequestMapping(value = "/categorias")
-public class CategoriasRecursos {
-
+@RequestMapping(value = "/produtos")
+public class ProdutoRecursos {
+	
 	@Autowired
-	private CategoriasServicos cs;
+	private ProdutoServicos ps;
 	
 	@GetMapping
-	public ResponseEntity<List<Categorias>> buscarCategorias(){
-		List<Categorias> categorias = cs.buscarPorCategoria();
-		return ResponseEntity.ok().body(categorias);
+	public ResponseEntity<List<Produto>> buscarProdutos(){
+		List<Produto> lista = ps.buscarPorProdutos();
+		return ResponseEntity.ok().body(lista);
 	}
 	
-	public ResponseEntity<Categorias> buscarPorId(@PathVariable Long id){
-		Categorias obj = cs.buscarCategoriasPorId(id);
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Produto> buscarProdutosPorId(@PathVariable Long id){
+		Produto obj = ps.buscarProdutosPorId(id);
 		return ResponseEntity.ok().body(obj);
 	}
+
 }

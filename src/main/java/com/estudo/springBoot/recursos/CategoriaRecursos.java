@@ -8,27 +8,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.service.annotation.GetExchange;
 
-import com.estudo.springBoot.entidades.Pedido;
-import com.estudo.springBoot.servicos.PedidoServicos;
+import com.estudo.springBoot.entidades.Categoria;
+import com.estudo.springBoot.servicos.CategoriaServicos;
 
 @RestController 
-@RequestMapping(value = "/pedidos")
-public class PedidoRecursos {
+@RequestMapping(value = "/categorias")
+public class CategoriaRecursos {
 
 	@Autowired
-	private PedidoServicos ps;
+	private CategoriaServicos cs;
 	
 	@GetMapping
-	public ResponseEntity<List<Pedido>> buscarPorPedidos(){
-		List<Pedido> lista = ps.buscarPorUsuarios();
+	public ResponseEntity<List<Categoria>> buscarPorCategorias(){
+		List<Categoria> lista = cs.buscarPorCategorias();
 		return ResponseEntity.ok().body(lista);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Pedido>buscarPedidosPorId(@PathVariable Long id){
-		Pedido obj = ps.buscarPorId(id);
-		return ResponseEntity.ok().body(obj); 
+	public ResponseEntity<Categoria> burcarCategoriasPorId(@PathVariable Long id){
+		Categoria obj = cs.buscarCategoriasPorId(id);
+		return ResponseEntity.ok().body(obj);
 	}
 }

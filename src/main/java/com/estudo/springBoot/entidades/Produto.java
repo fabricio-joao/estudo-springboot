@@ -16,10 +16,11 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
-@Entity
+import jakarta.persistence.Transient;
+ 
+@Entity 
 @Table(name = "Produtos")
-public class Produtos implements Serializable{
+public class Produto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,34 +33,33 @@ public class Produtos implements Serializable{
 	private String imgURL;
 	
 	@ManyToMany
-    @JoinTable(name = "Produtos_Categorias", joinColumns = @JoinColumn(name = "Produto_id"), inverseJoinColumns = @JoinColumn(name = "Categorias"))
-	private Set<Categorias> categorias = new HashSet<>();
+	@JoinTable(name = "Produtos_Categorias", joinColumns = @JoinColumn(name = "Produtos_Id"), inverseJoinColumns = @JoinColumn(name = "Categorias_Id"))
+	private Set<Categoria> categorias = new HashSet<>();
 	
 	@OneToMany(mappedBy = "id.produtos")
-	private Set<PedidoItens> itens = new HashSet<>();
-	
-	public Produtos() {
+	private Set<ItemPedido> itens = new HashSet<>();
+	public Produto() {
 		
 	}
 
-	public Produtos(Long id, String nome, String descricao, Double preco, String imgURL) {
+	public Produto(Long id, String nome, String descricao, Double preco, String imgURL) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.preco = preco;
 		this.imgURL = imgURL;
 	}
-
-	@JsonIgnore
-	public Set<Pedido> getPedido() {
+	
+    @JsonIgnore
+	public Set<Pedido> getPedidos() {
 		Set<Pedido> set = new HashSet<>();
-		for(PedidoItens x: itens) {
+		for(ItemPedido x: itens) {
 			set.add(x.getPedido());
 		}
 		return set;
 	}
 
-	public Set<Categorias> getCategorias() {
+	public Set<Categoria> getCategorias() {
 		return categorias;
 	}
 
@@ -103,6 +103,7 @@ public class Produtos implements Serializable{
 		this.imgURL = imgURL;
 	}
 
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -116,7 +117,8 @@ public class Produtos implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Produtos other = (Produtos) obj;
+		Produto other = (Produto) obj;
 		return Objects.equals(id, other.id);
 	}
+	
 }

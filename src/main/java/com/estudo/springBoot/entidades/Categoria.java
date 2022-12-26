@@ -5,37 +5,41 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity 
 @Table(name = "Categorias")
-public class Categorias implements Serializable {
+public class Categoria implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "categorias")
-	private Set<Produtos> produtos = new HashSet<>();
+	private Set<Produto> produtos = new HashSet<>();
 	
-	public Categorias() {
+	public Categoria() {
 	
 	}
 
-	public Categorias(Long id, String nome) {
+	public Categoria(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
 
-	public Set<Produtos> getProdutos() {
+	public Set<Produto> getProdutos() {
 		return produtos;
 	}
 
@@ -68,7 +72,8 @@ public class Categorias implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categorias other = (Categorias) obj;
+		Categoria other = (Categoria) obj;
 		return Objects.equals(id, other.id);
 	}
+	
 }

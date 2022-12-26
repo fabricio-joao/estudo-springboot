@@ -17,7 +17,7 @@ import com.estudo.springBoot.servicos.UsuarioServicos;
 public class UsuarioRecursos {
 	
 	@Autowired
-	UsuarioServicos us;
+	private UsuarioServicos us;
 	
 	@GetMapping
 	public ResponseEntity<List<Usuario>> buscarUsuarios(){

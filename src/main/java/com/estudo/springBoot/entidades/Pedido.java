@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import org.hibernate.annotations.CascadeType;
+
 import com.estudo.springBoot.enuns.PedidoStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,12 +19,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity 
 @Table(name = "Pedidos")
-public class Pedido implements Serializable{
+public class Pedido implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -31,73 +33,74 @@ public class Pedido implements Serializable{
 	private Long id;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-	private Instant momentos;
+	private Instant momento;
 	
-	@JsonIgnore
-	@ManyToOne
+	private Integer pedidoStatus;
+	
+	@ManyToOne()
 	@JoinColumn(name = "cliente_id")
 	private Usuario cliente;
 	
-	private Integer status;
+	@OneToMany(mappedBy = "id.pedidos")
+	private Set<ItemPedido> itens = new HashSet<>();
 	
-	@OneToMany(mappedBy = "id.pedido")
-	private Set<PedidoItens> itens = new HashSet<>();
-	
+	@OneToOne(mappedBy = "pedido", cascade = jakarta.persistence.CascadeType.ALL)
+	private Pagamento pagamento;
 	
 	public Pedido() {
-
+	
 	}
-
-	public Pedido(Long id, Instant momentos, Usuario cliente, PedidoStatus status) {
+	
+	public Pedido(Long id, Instant momento, Usuario cliente, PedidoStatus pedidoStatus) {
 		this.id = id;
-		this.momentos = momentos;
+		this.momento = momento;
 		this.cliente = cliente;
-		setStatus(status);
+		setPedidoStatus(pedidoStatus);
 	}
 
-	public Set<PedidoItens> getItens() {
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
+	}
+
+	public Set<ItemPedido> getItens() {
 		return itens;
-	}
-
-	public PedidoStatus getStatus() {
-		return PedidoStatus.valorOf(status);
-	}
-
-	public void setStatus(PedidoStatus status) {
-		if(status != null) {
-			this.status = status.getCodigo();
-		}
-	}
-
-	public Usuario getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Usuario cliente) {
-		this.cliente = cliente;
 	}
 
 	public Long getId() {
 		return id;
 	}
-
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public Instant getMomentos() {
-		return momentos;
+	
+	public Instant getMomento() {
+		return momento;
+	}
+	
+	public void setMomento(Instant momento) {
+		this.momento = momento;
+	}
+	
+	public PedidoStatus getPedidoStatus() {
+		return PedidoStatus.valorOf(pedidoStatus);
 	}
 
-	public void setMomentos(Instant momentos) {
-		this.momentos = momentos;
+	public void setPedidoStatus(PedidoStatus pedidoStatus) {
+		if(pedidoStatus != null) {
+			this.pedidoStatus = pedidoStatus.getCodigo();
+		}
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
