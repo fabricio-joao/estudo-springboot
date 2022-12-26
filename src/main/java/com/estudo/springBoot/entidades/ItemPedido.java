@@ -1,6 +1,7 @@
 package com.estudo.springBoot.entidades;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import com.estudo.springBoot.entidades.pk.PedidoItemPK;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -66,4 +67,26 @@ public class ItemPedido implements Serializable{
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
+	
+	public Double getSubTotal() {
+		return quantidade * preco;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ItemPedido other = (ItemPedido) obj;
+		return Objects.equals(id, other.id);
+	}
+	
 }
