@@ -23,4 +23,8 @@ public class UsuarioServicos {
 		Optional<Usuario> obj = ur.findById(id);
 		return obj.get();
 	}
+	
+	public Usuario inserirUsuario(Usuario usuario) {
+		return ur.save(usuario);
+	}
 }

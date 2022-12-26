@@ -27,7 +27,7 @@ public class Usuario implements Serializable{
 	private String nome;
 	private String email;
 	private String telefone;
-	private String pasword;
+	private String password;
 	
 	
 	@OneToMany(mappedBy = "cliente")
@@ -37,12 +37,12 @@ public class Usuario implements Serializable{
 		
 	}
 
-	public Usuario(Long id, String nome, String email, String telefone, String pasword) {
+	public Usuario(Long id, String nome, String email, String telefone, String password) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
-		this.pasword = pasword;
+		this.password = password;
 	}
 
 	public List<Pedido> getItens() {
@@ -81,12 +81,12 @@ public class Usuario implements Serializable{
 		this.telefone = telefone;
 	}
 
-	public String getPasword() {
-		return pasword;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPasword(String pasword) {
-		this.pasword = pasword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
