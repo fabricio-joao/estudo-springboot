@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.estudo.springBoot.entidades.Usuario;
 import com.estudo.springBoot.repositorios.UsuarioRepositorios;
+import com.estudo.springBoot.servicos.excecao.ExcecaoDoBancoDeDados;
 import com.estudo.springBoot.servicos.excecao.RecursoNaoFoiEncontradoException;
 
 @Service
@@ -30,7 +32,15 @@ public class UsuarioServicos {
 	}
 	
 	public void deletar(Long id) {
-		ur.deleteById(id);
+		try {
+			ur.deleteById(id);
+		}
+		catch(EmptyResultDataAccessException e){
+			throw new RecursoNaoFoiEncontradoException(id);
+		}
+		catch(RuntimeException e) {
+			throw new ExcecaoDoBancoDeDados(e.getMessage());
+		}
 	}
 	
 	
