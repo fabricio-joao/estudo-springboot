@@ -27,4 +27,24 @@ public class UsuarioServicos {
 	public Usuario inserirUsuario(Usuario usuario) {
 		return ur.save(usuario);
 	}
+	
+	public void deletar(Long id) {
+		ur.deleteById(id);
+	}
+	
+	
+	public Usuario atualizar(Long id, Usuario obj) {
+		Usuario entidade = ur.getReferenceById(id);
+		atualizarInformacoes(entidade, obj);
+		return ur.save(entidade);
+	}
+	
+	private void atualizarInformacoes(Usuario usuario, Usuario obj) {
+		usuario.setNome(obj.getNome());
+		usuario.setEmail(obj.getEmail());
+		usuario.setTelefone(obj.getTelefone());
+		usuario.setPassword(obj.getPassword()); 
+		
+		
+	}
 }
